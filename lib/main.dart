@@ -1,4 +1,8 @@
+import 'package:app_flutter/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'module/home/home.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: _title,
       home: MyStatefulWidget(),
     );
@@ -23,70 +28,31 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Favorite',
-      style: optionStyle,
-    ),
-    Text(
-      'Cart',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: _widgetOptions.elementAt(_selectedIndex),
-        backgroundColor: Colors.orange,
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            title: Text('Favorite'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_travel),
-            title: Text('Cart'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            title: Text('Profile'),
-          ),
-          
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor : Colors.amber[100],
-        unselectedLabelStyle : new TextStyle(color: Colors.amber[100]),
-        onTap: _onItemTapped,
-      ),
+      appBar: buildAppBar(),
+      body: Home(),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Colors.white,
+      leading: IconButton(
+          icon: SvgPicture.asset("assets/icons/back.svg"), onPressed: null),
+      actions: <Widget>[
+        IconButton(
+          icon: SvgPicture.asset("assets/icons/heart.svg",color: Colors.blueGrey,),
+          onPressed: null,
+        ),
+        IconButton(
+          icon: SvgPicture.asset("assets/icons/cart.svg",color: Colors.blueGrey,),
+          onPressed: null,
+        ),
+        SizedBox(width: kDefaultPaddin / 2,)
+      ],
     );
   }
 }
